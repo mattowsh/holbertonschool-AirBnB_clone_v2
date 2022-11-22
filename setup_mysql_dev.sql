@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 
 -- in case of ERROR 1290 (HY000): The MySQL server is running with the
 -- skip-grant-tables option, uncomment the next instruction:
---FLUSH PRIVILEGES;
+-- FLUSH PRIVILEGES;
 
 CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost'
 IDENTIFIED BY 'hbnb_dev_pwd';
