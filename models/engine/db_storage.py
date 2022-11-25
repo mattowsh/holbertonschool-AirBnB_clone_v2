@@ -4,12 +4,10 @@
 
 from os import getenv
 import sqlalchemy
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from models.user import User
-from models.base_model import BaseModel
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 import json
 from models.state import State
 from models.city import City
@@ -22,9 +20,6 @@ class DBStorage():
     """New Database"""
     __engine = None
     __session = None
-
-    our_classes = {"User": User, "State": State, "City": City,
-                   "Amenity": Amenity, "Place": Place, "Review": Review}
 
     def __init__(self):
         """init method"""
@@ -39,8 +34,20 @@ class DBStorage():
 
     def all(self, cls=None):
         """Return all objects in the current database session"""
+
+        our_classes = {"User": User, "State": State, "City": City,
+                   "Amenity": Amenity, "Place": Place, "Review": Review}
         result = {}
-    
+
+        if cls != None:
+            for element in self.__session.query(our_classes[cls]).all():
+                result[str(cls) + "." + element.id] = element
+        else:
+            for key in our_classes.keys():
+                for element in self.__session.query(key).all():
+                    result[key + "." + element.id] = element
+
+        return result
 
     def new(self, obj):
         """Adds a new object to the current database session"""
