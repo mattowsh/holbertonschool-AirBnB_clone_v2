@@ -38,13 +38,10 @@ class DBStorage():
                    "Amenity": Amenity, "Place": Place, "Review": Review}
         result = {}
 
-        if cls != None:
-            for element in self.__session.query(our_classes[cls]).all():
-                result[str(cls) + "." + element.id] = element
-        else:
-            for key in our_classes.keys():
-                for element in self.__session.query(key).all():
-                    result[str(key) + "." + element.id] = element
+        for cl in our_classes:
+            if our_classes[cl] == cls or cls is None:
+                for element in self.__session.query(our_classes[cl]).all():
+                    result[f"{type(element).__name__}.{element.id}"] = element
 
         return result
 
