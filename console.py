@@ -128,9 +128,7 @@ class HBNBCommand(cmd.Cmd):
 
         # Creates a new instances:
         new_instance = HBNBCommand.classes[new_class]()
-        # vamos a checkear de que naturaleza son los args que nos pasan:
-        # seran string si entre el arg tiene "" y sera numero si no tiene "". 
-        # recordar que si es un numero, puede ser int o float: float tendra un ., int no
+        
         for element in attrs:
             attribute_name = element.split("=")[0]
             value = element.split("=")[1]
