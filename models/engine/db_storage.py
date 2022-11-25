@@ -34,7 +34,6 @@ class DBStorage():
 
     def all(self, cls=None):
         """Return all objects in the current database session"""
-
         our_classes = {"User": User, "State": State, "City": City,
                    "Amenity": Amenity, "Place": Place, "Review": Review}
         result = {}
@@ -45,7 +44,7 @@ class DBStorage():
         else:
             for key in our_classes.keys():
                 for element in self.__session.query(key).all():
-                    result[key + "." + element.id] = element
+                    result[str(key) + "." + element.id] = element
 
         return result
 
