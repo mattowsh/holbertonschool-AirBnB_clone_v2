@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """ New DB Storage engine - SQLAlchemy """
-import json
 from os import getenv
-import sqlalchemy
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from models.user import User
@@ -21,14 +19,14 @@ class DBStorage():
 
     def __init__(self):
         """init method"""
-        self.__engine = create_engine(('mysql+mysqldb://{}:{}@{}/{}')
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(getenv('HBNB_MYSQL_USER'),
                                               getenv('HBNB_MYSQL_PWD'),
                                               getenv('HBNB_MYSQL_HOST'),
                                               getenv('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
         if getenv("HBNB_ENV") == "test":
-            Base.metadata.drop_all(bind=self.__engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Return all objects in the current database session"""
@@ -36,10 +34,13 @@ class DBStorage():
                    "Amenity": Amenity, "Place": Place, "Review": Review}
         result = {}
 
-        for cl in our_classes:
-            if our_classes[cl] == cls or cls is None:
-                for element in self.__session.query(our_classes[cl]).all():
-                    result[type(element).__name__ + "." + element.id] = element
+        if cls is None:
+            for cl in our_classes.values():
+                for obj in self.__session.query(cl).all():
+                    result[type(obj).__name__ + "." + obj.id] = obj
+        else:
+            for obj in self.__session.query(our_classes[cls]).all():
+                result[type(obj).__name__ + "." + obj.id] = obj
 
         return result
 
@@ -53,7 +54,7 @@ class DBStorage():
 
     def delete(self, obj=None):
         """Deletes an object to the current database session"""
-        if obj == None:
+        if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):

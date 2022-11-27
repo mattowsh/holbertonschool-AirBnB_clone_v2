@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
         new_class = args.split()[0]
         attrs = args.split()[1:]
 
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
             return
         elif new_class not in HBNBCommand.classes:
@@ -228,7 +228,7 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage.all(self.classes[args]).items():
+            for k, v in storage.all.items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
@@ -236,6 +236,8 @@ class HBNBCommand(cmd.Cmd):
                 print_list.append(str(v))
 
         print(print_list)
+        return print_list
+
 
     def help_all(self):
         """ Help information for the all command """

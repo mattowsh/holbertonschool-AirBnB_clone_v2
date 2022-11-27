@@ -12,13 +12,13 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         if cls is None:
             return FileStorage.__objects
+
         elif FileStorage.__objects:
             objs_result = {}
-            # Checks each object inside __objects and compare if a key
-            # == to our cls class filter:
+            # Checks each object inside __objects:
             for key, value in FileStorage.__objects.items():
-                if key.split(".")[0] == cls.__name__:
-                    objs_result[key] = FileStorage.__objects[key]
+                if isinstance(value, cls):
+                    objs_result[key] = value
             # In objs_result we save all the filtered results:
             return objs_result
 
@@ -46,10 +46,10 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-        }
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -63,15 +63,15 @@ class FileStorage:
         """Deletes an object from the storage __objects"""
         if obj is None:
             return
+        else:
+            # In JSON file we save all the new objects like:
+            # Place.213bhj231af3 = name of the object "." object.id:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
 
-        # In JSON file we save all the new objects like:
-        # Place.213bhj231af3 = name of the object "." object.id:
-        key = type(obj).__name__ + "." + obj.id
-
-        # If this key exists in __object, we have an object to be deleted:
-        if key in self.all():
-            del self.all()[key]
-            self.save()
+            # If this key exists in __object, we have an object to be deleted:
+            if key in self.all():
+                del self.__objects[key]
+                self.save()
 
     def close(self):
         """ Close function, deserializes the JSON file to Python objects"""
