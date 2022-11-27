@@ -12,7 +12,7 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         if cls is None:
             return FileStorage.__objects
-        else:
+        elif FileStorage.__objects:
             objs_result = {}
             # Checks each object inside __objects and compare if a key
             # == to our cls class filter:
@@ -46,30 +46,33 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
-        """Deletes an object from the storage"""
+        """Deletes an object from the storage __objects"""
         if obj is None:
             return
 
         # In JSON file we save all the new objects like:
         # Place.213bhj231af3 = name of the object "." object.id:
-        key = f"{type(obj).__name__}.{obj.id}"
+        key = type(obj).__name__ + "." + obj.id
 
         # If this key exists in __object, we have an object to be deleted:
         if key in self.all():
-            objects_dict = self.all()
-            objects_dict.pop(key)
+            del self.all()[key]
             self.save()
+
+    def close(self):
+        """ Close function, deserializes the JSON file to Python objects"""
+        self.reload()

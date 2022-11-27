@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 """ New DB Storage engine - SQLAlchemy """
-
-
+import json
 from os import getenv
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from models.user import User
 from models.base_model import BaseModel, Base
-import json
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
@@ -37,10 +35,11 @@ class DBStorage():
         our_classes = {"User": User, "State": State, "City": City,
                    "Amenity": Amenity, "Place": Place, "Review": Review}
         result = {}
+
         for cl in our_classes:
             if our_classes[cl] == cls or cls is None:
                 for element in self.__session.query(our_classes[cl]).all():
-                    result[f"{type(element).__name__}.{element.id}"] = element
+                    result[type(element).__name__ + "." + element.id] = element
 
         return result
 
@@ -56,7 +55,6 @@ class DBStorage():
         """Deletes an object to the current database session"""
         if obj == None:
             self.__session.delete(obj)
-            self.save()
 
     def reload(self):
         """Create all tables in the database create the current database
