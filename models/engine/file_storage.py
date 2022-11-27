@@ -16,8 +16,8 @@ class FileStorage:
         elif FileStorage.__objects:
             objs_result = {}
             # Checks each object inside __objects:
-            for key, value in FileStorage.__objects.items():
-                if isinstance(value, cls):
+            for key, value in self.__objects.items():
+                if cls == type(value):
                     objs_result[key] = value
             # In objs_result we save all the filtered results:
             return objs_result
@@ -68,10 +68,12 @@ class FileStorage:
             # Place.213bhj231af3 = name of the object "." object.id:
             key = "{}.{}".format(type(obj).__name__, obj.id)
 
-            # If this key exists in __object, we have an object to be deleted:
-            if key in self.all():
+            try:
                 del self.__objects[key]
                 self.save()
+            # If the key isn't in __objects raises and exception:
+            except Exception:
+                pass
 
     def close(self):
         """ Close function, deserializes the JSON file to Python objects"""
