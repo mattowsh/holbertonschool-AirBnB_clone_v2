@@ -44,7 +44,7 @@ class Place(BaseModel, Base):
             from models import storage
 
             results = []
-            for key in storage.all(Review).values():
-                if self.id == key.place_id:
-                    results.append(storage.all(Review)[key])
+            for element in storage.all(Review).values():
+                if self.id == element.place_id:
+                    results.append(storage.all(Review)[element])
             return results
