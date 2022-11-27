@@ -24,10 +24,9 @@ class State(BaseModel, Base):
             cities in the same state"""
             from models.city import City
             from models import storage
-            
+
             results = []
             for key in storage.all(City).values():
                 if self.id == City.state_id:
                     results.append(storage.all(City)[key])
             return results
-
