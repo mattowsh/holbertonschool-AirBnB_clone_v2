@@ -31,7 +31,7 @@ class DBStorage():
     def all(self, cls=None):
         """Return all objects in the current database session"""
         our_classes = {"User": User, "State": State, "City": City,
-                   "Amenity": Amenity, "Place": Place, "Review": Review}
+                       "Amenity": Amenity, "Place": Place, "Review": Review}
         result = {}
 
         if cls is None:
@@ -72,4 +72,3 @@ class DBStorage():
     def close(self):
         """To close our current database session"""
         self.__session.close()
-
