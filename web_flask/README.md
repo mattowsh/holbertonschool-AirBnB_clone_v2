@@ -1,4 +1,4 @@
-# <a  href="https://flask.palletsprojects.com/en/2.2.x/"> <img src="https://iotbytes.files.wordpress.com/2016/08/flask.png" alt="Python Language" width=12% ></img></a> **AirBnB clone - Web framework**
+# <a  href="https://flask.palletsprojects.com/en/2.2.x/"> <img src="https://iotbytes.files.wordpress.com/2016/08/flask.png" alt="Flask framework" width=12% ></img></a> **AirBnB clone - Web framework**
 
 In this section you can find tasks and projects of Fundations: 3nd trimesters, of Software Engineer career at Holberton School.
 
