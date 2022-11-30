@@ -2,7 +2,7 @@
 """
 Task 5: script that starts a Flask web application
 """
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -36,8 +36,8 @@ def print_int(n):
 
 
 @app.route('/number_template/<int:n>')
-def displays_html():
-    
+def displays_html(n):
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == "__main__":
