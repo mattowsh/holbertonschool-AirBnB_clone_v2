@@ -137,7 +137,8 @@ class DBStorage():
 #         session (self.__session) from the engine (self.__engine) by using
 #         a sessionmaker"""
 #         Base.metadata.create_all(self.__engine)
-#         new_session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+#         new_session = sessionmaker(bind=self.__engine,
+#           expire_on_commit=False)
 
 #         # We use scoped_session for thread safety: make sure your Session
 #         # is thread-safe:
