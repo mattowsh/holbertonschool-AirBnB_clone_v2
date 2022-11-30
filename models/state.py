@@ -13,17 +13,28 @@ class State(BaseModel, Base):
         __tablename__ = "states"
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state",
-                                cascade="all, delete-orphan")
+                            cascade="all, delete-orphan")
     else:
         name = ""
 
+        # @property
+        # def cities(self):
+        #     from models.city import City
+        #     from models import storage
+
+        #     results = []
+        #     for element in storage.all(City).values():
+        #         if self.id == element.state_id:
+        #             results.append(storage.all(City)[element])
+        #     return results
+
+    if (getenv("HBNB_TYPE_STORAGE") != "db"):
         @property
         def cities(self):
-            from models.city import City
+            """cities"""
             from models import storage
-
-            results = []
-            for element in storage.all(City).values():
-                if self.id == element.state_id:
-                    results.append(storage.all(City)[element])
-            return results
+            stacit = []
+            for stat in storage.all(City).values():
+                if self.id == city.state_id:
+                    stacit.append(storage.all(City)[stat])
+            return stacit
