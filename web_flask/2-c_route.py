@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Task 2: script that starts a Flask web application"""
+"""
+Task 2: script that starts a Flask web application
+"""
 from flask import Flask
 
 app = Flask(__name__)
@@ -18,7 +20,7 @@ def hbnb(strict_slashes=False):
 @app.route('/c/<text>')
 def c_is_fun(text, strict_slashes=False):
     text = text.replace("_", " ")
-    return f"C {text}"
+    return "C {}".format(text)
 
 
 if __name__ == "__main__":

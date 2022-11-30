@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Task 3: script that starts a Flask web application
+Task 5: script that starts a Flask web application
 """
 from flask import Flask
 
@@ -28,6 +28,16 @@ def c_is_fun(text):
 def python_is_cool(text='is cool'):
     text = text.replace("_", " ")
     return "Python {}".format(text)
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
+def print_int(n):
+    return '{} is a number'.format(n)
+
+
+@app.route('/number_template/<int:n>')
+def displays_html():
+    
 
 
 if __name__ == "__main__":
