@@ -25,7 +25,6 @@ class State(BaseModel, Base):
             return [obj for obj in models.storage.all(City).values() if
                     obj.state_id == self.id]
 
-
     # if getenv("HBNB_TYPE_STORAGE") == "db":
     #     __tablename__ = "states"
     #     name = Column(String(128), nullable=False)
