@@ -12,6 +12,7 @@ app = Flask(__name__)
 def teardown_db(exception):
     """Removes the current SQLAlchemy Session"""
     storage.close()
+    
 
 @app.route('/cities_by_states', strict_slashes=False)
 def state_cities():
@@ -19,6 +20,7 @@ def state_cities():
     return render_template(
         '8-cities_by_states.html', states=storage.all("State").values()
         )
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
