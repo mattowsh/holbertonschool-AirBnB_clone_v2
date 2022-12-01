@@ -8,16 +8,17 @@ app = Flask(__name__)
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """Removes the current SQLAlchemy Session"""
+    """ removes the current SQLAlchemy Session"""
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
 def states_list():
-    """Displays all states in a list format using an HTML file"""
-    return render_template('7-states_list.html',
-                            states=storage.all('State').values())
+    """ renders all states """
+    return render_template(
+        '7-states_list.html', states=storage.all("State").values()
+        )
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)
