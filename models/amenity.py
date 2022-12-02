@@ -8,6 +8,7 @@ STRG = os.environ.get('HBNB_TYPE_STORAGE')
 
 
 class Amenity(BaseModel, Base):
+    """Amenities of a place"""
     if STRG == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
