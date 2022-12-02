@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<HTML lang="en">
 
-<head>
-    <title>HBNB</title>
-</head>
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
 
-<body>
-    {% if states is not none %}
+    <BODY>
+        {% if states is not none %}
+        
+        {% if qty > 1 %}
+            <H1>States:</H1>
+            <UL>
+                {% for state in states|sort(attribute='name') %}
+                <LI>{{ state.id }}: <b>{{ state.name }}</b></LI>
+                {% endfor %}
+            </UL>
+        {% else %}
+            <H1>State: {{ states.name }}</H1>
+            <H3>Cities:</H3>
+            <UL>
+                {% for city in states.cities|sort(attribute='name') %}
+                <LI>{{ city.id }}: <b>{{ city.name }}</b></LI>
+                {% endfor %}
+            </UL>
+        {% endif %}
     
-    {% if qty > 1 %}
-        <h1>States:</h1>
-        <ul>
-            {% for state in states|sort(attribute='name') %}
-            <li>{{ state.id }}: <b>{{ state.name }}</b></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h1>State: {{ states.name }}</h1>
-        <h3>Cities:</h3>
-        <ul>
-            {% for city in states.cities|sort(attribute='name') %}
-            <li>{{ city.id }}: <b>{{ city.name }}</b></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-   
-    {% else %}
-    <h1>Not found!</h1>
-    {% endif %}
-</body>
+        {% else %}
+        <H1>Not found!</H1>
+        {% endif %}
+    </BODY>
 
-</html>
+</HTML>
